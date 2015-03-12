@@ -1,17 +1,16 @@
 var express = require("express");
+var mongoose = require('mongoose');
+var bodyParser = require('body-parser');
+
 var app = express();
-var router = express.Router();
 
-router.use(function(res, req, next){
-	console.log(res);
-	next();
-})
+mongoose.connect("mongodb://localhost/rest_test");
 
-router.get("/", function(req, res){
-	res.json({"name":"james","year": 32})
-})
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use('/api', require('./routers/api'));
 
-app.use("/api", router);
+app.use(express.static(__dirname + '/public'));
 
 var server = app.listen(3000, function () {
 
