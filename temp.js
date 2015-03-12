@@ -64,14 +64,15 @@
                 });
                 $scope.products = Product.query();
             }
-            $scope.updateProduct = function(id) {
+            $scope.updateProduct = function(product) {
                 var pp = {
                     name: $scope.name,
                     price: 100.00
                 }
+                console.log(product);
                 Product.update({
-                    id: id
-                }, pp);
+                    id: product._id
+                }, product);
                 $scope.products = Product.query();
             }
             $scope.products = Product.query();
