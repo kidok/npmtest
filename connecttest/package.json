@@ -1,0 +1,22 @@
+{
+  "name": "npmtest",
+  "version": "1.0.0",
+  "description": "npmtest\r =======",
+  "main": "abc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kidok/npmtest.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kidok/npmtest/issues"
+  },
+  "homepage": "https://github.com/kidok/npmtest",
+  "dependencies": {
+    "connect": "^3.3.4"
+  }
+}
