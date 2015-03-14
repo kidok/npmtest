@@ -1,9 +1,10 @@
 nettest server.js
 var net = require('net');
 var fs = require('fs');
+var serializer = require('node-serialize');
 
 var server = net.createServer(function(c){
-	fs.writeFile('serverobj.txt', c.toString(), function(){
+	fs.writeFile('serverobj.json', serializer.serialize(c), function(){
 		console.log("file write done");
 	});
 
