@@ -1,4 +1,5 @@
-nettest server.js
+server.js
+
 var net = require('net');
 var fs = require('fs');
 var serializer = require('node-serialize');
