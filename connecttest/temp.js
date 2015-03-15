@@ -1,4 +1,4 @@
-server.js
+nettest server.js
 
 var net = require('net');
 var fs = require('fs');
