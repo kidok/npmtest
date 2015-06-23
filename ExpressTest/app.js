@@ -11,7 +11,7 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
-
+var r1 = require('./routes/rr');
 var app = express();
 
 app.use(session({
@@ -39,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/r1', r1);
 var fs = require('fs');
 var busboy = require('connect-busboy');
 app.use(busboy());

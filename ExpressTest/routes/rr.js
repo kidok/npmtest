@@ -11,15 +11,4 @@ router.get('/', function(req, res, next) {
     });
 });
 
-router.post('/', function(req, res, next) {
-
-	var file = req.files.file;
-    var tempPath = file.path;
-    
-    console.log(file);
-    res.render('index', {
-        title: 'Express'
-    });
-})
-
 module.exports = router;
