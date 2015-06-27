@@ -29,8 +29,6 @@ function FileReader(file) {
     events.EventEmitter.call(this);
 };
 
-
-
 util.inherits(FileReader, events.EventEmitter);
 
 FileReader.prototype.readFile = function() {
