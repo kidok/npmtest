@@ -24,3 +24,4 @@ var promise = new Promise(function(resolve, reject) {
 });
 
 promise.then(console.log('success'));
+

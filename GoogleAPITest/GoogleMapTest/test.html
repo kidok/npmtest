@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style type="text/css">
+    html,
+    body,
+    #map-canvas {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    </style>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdGmgKMn8tBPlQm3lqjk6IuOrWUGQhYmQ">
+    </script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js">
+    </script>
+</head>
+
+<body>
+    <div id="map-canvas"></div>
+</body>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            var map;
+            var elevator;
+            var myOptions = {
+                zoom: 10,
+                center: new google.maps.LatLng(lat, lng),
+                //mapTypeId: 'terrain'
+            };
+            map = new google.maps.Map($('#map_canvas')[0], myOptions);
+            
+            var addresses = ['3901 W. Olympic Blvd LA CA 90019', '1220 S Diamond Bar Blvd Unit D Diamond Bar‎ CA‎ 91765', '3700 W Olympic Blvd, Los Angeles, CA 90019', '1530 S San Gabriel Blvd, CA 91776'];
+
+            for (var x = 0; x < addresses.length; x++) {
+                $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address=' + addresses[x] + '&sensor=false', null, function(data) {
+                    var p = data.results[0].geometry.location
+                    var latlng = new google.maps.LatLng(p.lat, p.lng);
+                    new google.maps.Marker({
+                        position: latlng,
+                        map: map
+                    });
+
+                });
+            }
+        });
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+});
+</script>
+
+</html>
