@@ -5,7 +5,7 @@
     <style type="text/css">
     html,
     body,
-    #map-canvas {
+    #map_canvas {
         height: 100%;
         margin: 0;
         padding: 0;
@@ -18,7 +18,7 @@
 </head>
 
 <body>
-    <div id="map-canvas"></div>
+    <div id="map_canvas"></div>
 </body>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -28,31 +28,77 @@ $(document).ready(function() {
 
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
+            var myCenter = new google.maps.LatLng(lat, lng);
+            
             var map;
-            var elevator;
             var myOptions = {
                 zoom: 10,
-                center: new google.maps.LatLng(lat, lng),
-                //mapTypeId: 'terrain'
+                center: myCenter,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
             };
+            //console.log(lat);
             map = new google.maps.Map($('#map_canvas')[0], myOptions);
-            
-            var addresses = ['3901 W. Olympic Blvd LA CA 90019', '1220 S Diamond Bar Blvd Unit D Diamond Bar‎ CA‎ 91765', '3700 W Olympic Blvd, Los Angeles, CA 90019', '1530 S San Gabriel Blvd, CA 91776'];
 
-            for (var x = 0; x < addresses.length; x++) {
-                $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address=' + addresses[x] + '&sensor=false', null, function(data) {
-                    var p = data.results[0].geometry.location
-                    var latlng = new google.maps.LatLng(p.lat, p.lng);
-                    new google.maps.Marker({
-                        position: latlng,
-                        map: map
-                    });
+            var myaddressmarker = new google.maps.Marker({
+                position: myCenter,
+                map: map,
+                title: 'You are here!',
+                icon: './bluecircle.png'
+                    //optimized: false
+            });
+            var circle = new google.maps.Circle({
+                center: myCenter,
+                fillColor: 'blue',
+                fillOpacity: 0.10,
+                strokeColor: 'blue',
+                strokeOpacity: 0.25,
+                strokeWeight: 1,
+                map: map,
+                radius: 20000
+            });
+            //myaddressmarker.setAnimation(google.maps.Animation.BOUNCE);
+            // myaddressmarker.setAnimation(null);
+            // var circle = new google.maps.Circle({
+            //     map: map,
+            //     radius: 500, // 10 miles in metres
 
+            //     fillColor: '#AA0000'
+            // });
+
+            // circle.bindTo('center', myaddressmarker, 'position');
+
+            var addresses = ['3901 W. Olympic Blvd LA CA 90019', '1220 S Diamond Bar Blvd Unit D Diamond Bar‎ CA‎ 91765', '3700 W Olympic Blvd, Los Angeles, CA 90019', '1530 S San Gabriel Blvd, CA 91776','31 E Valley Blvd, Alhambra, Alhambra, CA 91801'];
+            var geocoder = new google.maps.Geocoder();
+            // geocoder.geocode({
+            //     'address': '3901 W. Olympic Blvd LA CA 90019'
+            // }, function(r, s) {
+            //     console.log(r[0].geometry.location)
+            // })
+            for (var i = 0; i < addresses.length; i++) {
+                // $.getJSON('http://maps.googleapis.com/maps/api/geocode/json?address=' + addresses[i] + '&sensor=false', null, function(data) {
+                //     var p = data.results[0].geometry.location
+                //     var latlng = new google.maps.LatLng(p.lat, p.lng);
+                //     new google.maps.Marker({
+                //         position: latlng,
+                //         map: map
+                //     });
+                // });
+                geocoder.geocode({'address': addresses[i]}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {                    
+                        //map.setCenter(results[0].geometry.location);
+                        marker = new google.maps.Marker({
+                            map: map,
+                            position: results[0].geometry.location,
+                            title: results[0].geometry.location.A.toString()
+                        });
+                    } else {
+                        console.log("Geocode was not successful for the following reason: " + status);
+                    }
                 });
             }
         });
     } else {
-        alert("Geolocation is not supported by this browser.");
+        console.log("Geolocation is not supported by this browser.");
     }
 });
 </script>
