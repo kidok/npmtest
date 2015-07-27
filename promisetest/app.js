@@ -25,3 +25,21 @@ var promise = new Promise(function(resolve, reject) {
 
 promise.then(console.log('success'));
 
+var promise = new Promise(function(resolve, reject) {
+    resolve(1);
+});
+
+var defer = promise.then(function(val) {
+    console.log(val); // 1
+    return val + 2;
+});
+
+console.log(defer instanceof Promise);
+
+console.log(Promise.defered);
+defer.then(function(val) {
+    console.log(val); // 3
+    return val + 1;
+}).then(function(val) {
+    console.log(val + 1);
+})
