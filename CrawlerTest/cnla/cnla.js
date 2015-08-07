@@ -42,13 +42,24 @@ function initModel(model, data, callback, isAdd) {
 
 
 function myFun(i) {
-    var currentpage = 'http://www.chineseinla.com/restaurant/task_list/catid_6/page_' + i + '.html';
-    var referpage = 'http://www.chineseinla.com/restaurant/task_list/catid_6/page_' + (i - 1) + '.html'
+    var currentpage, referpage
+    if (i == 1) {
+        currentpage = 'http://www.chineseinla.com/restaurant/task_list/catid_6.html';
+        referpage = 'http://www.chineseinla.com/';
+    } else {
+        currentpage = 'http://www.chineseinla.com/restaurant/task_list/catid_6/page_' + i + '.html';
+        if (i == 2) {
+            referpage = 'http://www.chineseinla.com/restaurant/task_list/catid_6.html'
+        } else {
+            referpage = 'http://www.chineseinla.com/restaurant/task_list/catid_6/page_' + (i - 1) + '.html'
+        }
+    }
+
     console.log(currentpage);
     console.log(referpage);
     superagent.get(currentpage)
         .set('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.130 Safari/537.36')
-        .set('Cookie', '__atuvc=15%7C44%2C23%7C45%2C1%7C46; PHPSESSID=fi8hvbro04d6h35dde8h0bg9c4; mosvisitor=1; __utmt=1; __utma=125619416.54794317.1435086292.1435172122.1435360448.3; __utmb=125619416.32.10.1435360448; __utmc=125619416; __utmz=125619416.1435172123.2.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); b9afd5446abb1cde865304652e2c04b9=f55608057cb4dbb50040a0bfd9390cd9')
+        .set('Cookie', 'PHPSESSID=je9s0kefbo4u1eadpokv8rcva4; mosvisitor=1; b9afd5446abb1cde865304652e2c04b9=b29c1bbec70e7327234b7b145e4a41d5; __utmt=1; __utma=125619416.1363235119.1430284712.1436073645.1436853544.31; __utmb=125619416.1.10.1436853544; __utmc=125619416; __utmz=125619416.1432787842.10.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided)')
         .set('Referer', referpage)
         .end(function(err, res) {
             var $ = cheerio.load(res.text);
@@ -77,10 +88,10 @@ function myFun(i) {
         });
 };
 
-var i = 3;
+var i = 1;
 var timer = setInterval(function() {
     myFun(i);
     console.log(i++);
-    if (i === 8) clearInterval(timer);
+    if (i === 178) clearInterval(timer);
     console.log('post-interval'); //this will still run after clearing
-}, 5000);
+}, 6000);

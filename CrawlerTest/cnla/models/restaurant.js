@@ -40,12 +40,13 @@ CompanyDetailInfo.prototype.GetKeywords = function() {
 function TagTitleInfo(tag_title, $) {
     this.tag_title = tag_title;
     this.$ = $;
-    this.tag_title_a = tag_title.children('a').first();
+    this.tag_title_a = tag_title.find('a').first();
     this.name = this.tag_title_a.text();
     this.href = this.tag_title_a.attr('href');
 };
 
 TagTitleInfo.prototype.GetID = function() {
+    //console.log(this.tag_title_a);
     var id = this.href.match(/id_(\S*).html/);
     if (id && id.length >= 2) {
         return id[1];

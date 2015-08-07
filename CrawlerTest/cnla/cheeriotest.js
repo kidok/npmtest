@@ -45,7 +45,7 @@ fs.readFile('./sample.html', 'utf8', function(err, data) {
         var company_detail = $(this).children('.company_detail');
         var companyDetailInfo = new CompanyDetailInfo(company_detail, $);
         var restaurant = {};
-        restaurant.id = tagTitleInfo.GetID();
+        restaurant.uid = tagTitleInfo.GetID();
         restaurant.href = tagTitleInfo.href;
         restaurant.name = tagTitleInfo.name;
         restaurant.addresses = companyDetailInfo.GetAddresses();
